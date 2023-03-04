@@ -1,5 +1,5 @@
 # devops-netology
-
+new line
 # Игнорируются все файлы и каталоги в каталогах .terraform 
 **/.terraform/*
 
