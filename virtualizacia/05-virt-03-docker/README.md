@@ -51,3 +51,36 @@ Hey, Netology
 - Подключитесь к первому контейнеру с помощью ```docker exec``` и создайте текстовый файл любого содержания в ```/data```.
 - Добавьте ещё один файл в папку ```/data``` на хостовой машине.
 - Подключитесь во второй контейнер и отобразите листинг и содержание файлов в ```/data``` контейнера.
+
+```bash
+# on host machine
+docker pull debian
+docker pull centos
+mkdir data/
+docker run -v ./data:/data --name centos -w /data -td centos
+docker run -v ./data:/data --name debian -w /data -td debian
+echo 2 > host_file
+docker ps
+
+CONTAINER ID   IMAGE     COMMAND       CREATED          STATUS          PORTS     NAMES
+
+d41827ffe084   debian    "bash"        11 minutes ago   Up 11 minutes             debian
+2fc596869dc5   centos    "/bin/bash"   15 minutes ago   Up 15 minutes             centos
+
+
+# centos container
+
+docker exec -it 2fc596869dc5 bash
+echo 1  > centos-file
+exit
+
+
+# debian container
+docker exec -it d41827ffe084 bash
+ls
+cat centos-file
+cat host_file
+
+```
+![Screenshot](https://github.com/Wollfik/-Myrepoz-SQL.-1/blob/main/img/Screenshot_5.png)
+
