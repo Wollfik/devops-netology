@@ -33,7 +33,9 @@
 
 ## Задача 2
 
-**2.1.** Создайте вашу первую виртуальную машину в YandexCloud с помощью web-интерфейса YandexCloud.        
+**2.1.** Создайте вашу первую виртуальную машину в YandexCloud с помощью web-интерфейса YandexCloud.  
+
+![Screenshot](https://github.com/Wollfik/Myrepoz/blob/main/Screenshot_10.png)
 
 ## Задача 3
 
@@ -41,6 +43,8 @@
 Используйте Ansible-код в директории ([src/ansible](https://github.com/netology-group/virt-homeworks/tree/virt-11/05-virt-04-docker-compose/src/ansible)).
 
 Чтобы получить зачёт, вам нужно предоставить вывод команды "docker ps" , все контейнеры, описанные в [docker-compose](https://github.com/netology-group/virt-homeworks/blob/virt-11/05-virt-04-docker-compose/src/ansible/stack/docker-compose.yaml),  должны быть в статусе "Up".
+
+![Screenshot](https://github.com/Wollfik/Myrepoz/blob/main/Screenshot_9.png)
 
 ## Задача 4
 
@@ -52,8 +56,6 @@
 Чтобы получить зачёт, предоставьте: 
 
 - скриншот работающего веб-интерфейса Grafana с текущими метриками, как на примере ниже.
-<p align="center">
-  <img width="1200" height="600" src="./assets/yc_02.png">
-</p>
+![Screenshot](https://github.com/Wollfik/Myrepoz/blob/main/Screenshot_12.png)
 
 
