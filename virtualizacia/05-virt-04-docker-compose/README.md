@@ -28,7 +28,8 @@
 
 Чтобы получить зачёт, вам нужно предоставить скриншот страницы с созданным образом из личного кабинета YandexCloud.
 
-![Screenshot](https://github.com/Wollfik/-Myrepoz-SQL.-1/blob/main/img/Screenshot_11.png)
+![Screenshot](https://github.com/Wollfik/Myrepoz/blob/main/Screenshot_11.png)
+
 
 ## Задача 2
 
