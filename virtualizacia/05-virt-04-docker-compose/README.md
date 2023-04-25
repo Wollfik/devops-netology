@@ -35,7 +35,7 @@
 
 **2.1.** Создайте вашу первую виртуальную машину в YandexCloud с помощью web-интерфейса YandexCloud.  
 
-![Screenshot](https://github.com/Wollfik/Myrepoz/blob/main/Screenshot_10.png)
+![Screenshot](https://github.com/Wollfik/Myrepoz/blob/main/Screenshot_14.png)
 
 ## Задача 3
 
@@ -56,6 +56,6 @@
 Чтобы получить зачёт, предоставьте: 
 
 - скриншот работающего веб-интерфейса Grafana с текущими метриками, как на примере ниже.
-![Screenshot](https://github.com/Wollfik/Myrepoz/blob/main/Screenshot_12.png)
+![Screenshot](https://github.com/Wollfik/Myrepoz/blob/main/Screenshot_13.png)
 
 
