@@ -26,7 +26,7 @@
 
 _`Server version:         8.0.32 MySQL Community Server - GPL`_
 
-![image](https://github.com/Wollfik/Myrepoz/blob/main/06-db-03-mysql/06-db-03-mysql 1.png)
+![image](https://github.com/Wollfik/Myrepoz/blob/main/06-db-03-mysql/06-db-03-mysql_1.png)
 
 ## Задача 2
 
