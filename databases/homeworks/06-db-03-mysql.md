@@ -26,7 +26,7 @@
 
 _`Server version:         8.0.32 MySQL Community Server - GPL`_
 
-![image](https://github.com/Wollfik/Myrepoz/blob/main/06-db-03-mysql/06-db-03-mysql_1.png)
+![image](https://github.com/Wollfik/Myrepoz/blob/main/06-db-03-mysql/1.png)
 
 ## Задача 2
 
@@ -45,7 +45,7 @@ _`Server version:         8.0.32 MySQL Community Server - GPL`_
 Используя таблицу INFORMATION_SCHEMA.USER_ATTRIBUTES, получите данные по пользователю `test` и 
 **приведите в ответе к задаче**.
 
-![image](https://github.com/Wollfik/Myrepoz/blob/main/06-db-03-mysql/06-db-03-mysql 2.png)
+![image](https://github.com/Wollfik/Myrepoz/blob/main/06-db-03-mysql/2.png)
 
 ## Задача 3
 
@@ -55,13 +55,13 @@ _`Server version:         8.0.32 MySQL Community Server - GPL`_
 Исследуйте, какой `engine` используется в таблице БД `test_db` и **приведите в ответе**.
 
 Используется `InnoDB`;
-![image](https://github.com/Wollfik/Myrepoz/blob/main/06-db-03-mysql/06-db-03-mysql 3.png)
+![image](https://github.com/Wollfik/Myrepoz/blob/main/06-db-03-mysql/3.png)
 
 Измените `engine` и **приведите время выполнения и запрос на изменения из профайлера в ответе**:
 - на `MyISAM`,
 - на `InnoDB`.
 
-![image](https://github.com/Wollfik/Myrepoz/blob/main/06-db-03-mysql/06-db-03-mysql 4.png)
+![image](https://github.com/Wollfik/Myrepoz/blob/main/06-db-03-mysql/4.png)
 
 ## Задача 4 
 
