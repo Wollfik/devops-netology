@@ -24,6 +24,10 @@
 
 В следующих заданиях мы будем продолжать работу с этим контейнером.
 
+_`Server version:         8.0.32 MySQL Community Server - GPL`_
+
+![image](https://github.com/Wollfik/Myrepoz/blob/main/06-db-03-mysql/06-db-03-mysql 1.png)
+
 ## Задача 2
 
 Создайте пользователя test в БД c паролем test-pass, используя:
@@ -41,6 +45,8 @@
 Используя таблицу INFORMATION_SCHEMA.USER_ATTRIBUTES, получите данные по пользователю `test` и 
 **приведите в ответе к задаче**.
 
+![image](https://github.com/Wollfik/Myrepoz/blob/main/06-db-03-mysql/06-db-03-mysql 2.png)
+
 ## Задача 3
 
 Установите профилирование `SET profiling = 1`.
@@ -48,9 +54,14 @@
 
 Исследуйте, какой `engine` используется в таблице БД `test_db` и **приведите в ответе**.
 
+Используется `InnoDB`;
+![image](https://github.com/Wollfik/Myrepoz/blob/main/06-db-03-mysql/06-db-03-mysql 3.png)
+
 Измените `engine` и **приведите время выполнения и запрос на изменения из профайлера в ответе**:
 - на `MyISAM`,
 - на `InnoDB`.
+
+![image](https://github.com/Wollfik/Myrepoz/blob/main/06-db-03-mysql/06-db-03-mysql 4.png)
 
 ## Задача 4 
 
@@ -65,11 +76,25 @@
 - размер файла логов операций 100 Мб.
 
 Приведите в ответе изменённый файл `my.cnf`.
+```ini
+[mysqld]
+skip-host-cache
+skip-name-resolve
+datadir=/var/lib/mysql
+socket=/var/run/mysqld/mysqld.sock
+secure-file-priv=/var/lib/mysql-files
+user=mysql
 
----
+# added for task 4
+innodb_flush_log_at_trx_commit = 2
+innodb_compression_level       = 9 # default 6, 0 to 9
+innodb_log_buffer_size         = 1M
+innodb_buffer_pool_size        = 4096M
+innodb_log_file_size           = 100M
 
-### Как оформить ДЗ
+pid-file=/var/run/mysqld/mysqld.pid
+[client]
+socket=/var/run/mysqld/mysqld.sock
 
-Выполненное домашнее задание пришлите ссылкой на .md-файл в вашем репозитории.
-
----
+!includedir /etc/mysql/conf.d/
+```
