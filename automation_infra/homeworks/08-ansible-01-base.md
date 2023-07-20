@@ -52,16 +52,3 @@ ok: [localhost] => {
 ```
 
 12.  Заполните `README.md` ответами на вопросы. Сделайте `git push` в ветку `master`. В ответе отправьте ссылку на ваш открытый репозиторий с изменённым `playbook` и заполненным `README.md`.
-
-## Необязательная часть
-
-1. При помощи `ansible-vault` расшифруйте все зашифрованные файлы с переменными. - _**`ansible-vault decrypt nah/automation_infra/homeworks/tmp/ans/01/group_vars/deb/examp.yml nah/automation_infra/homeworks/tmp/ans/01/group_vars/el/examp.yml`**_
-2. Зашифруйте отдельное значение `PaSSw0rd` для переменной `some_fact` паролем `netology`. Добавьте полученное значение в `group_vars/all/exmp.yml`. - _**[all/examp.yml](/automation_infra/homeworks/tmp/ans/01/group_vars/all/examp.yml)**_
-3. Запустите `playbook`, убедитесь, что для нужных хостов применился новый `fact`.
-4. Добавьте новую группу хостов `fedora`, самостоятельно придумайте для неё переменную. В качестве образа можно использовать [этот](https://hub.docker.com/r/pycontribs/fedora).
-5. Напишите скрипт на bash: автоматизируйте поднятие необходимых контейнеров, запуск ansible-playbook и остановку контейнеров.
-6. Все изменения должны быть зафиксированы и отправлены в вашей личный репозиторий.
-
-_**Save vault password in `vault.pw` file in `nah/automation_infra/homeworks/tmp/ans/01` directory**_
-
-_**Run script: `./tmp/ans/01/provision.sh` from `nah/automation_infra/homeworks` directory**_
