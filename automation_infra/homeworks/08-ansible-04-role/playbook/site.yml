@@ -1,0 +1,67 @@
+---
+- name: Install Clickhouse
+  hosts: clickhouse
+  handlers:
+    - name: Clickhouse | Start clickhouse service
+      become: true
+      ansible.builtin.service:
+        name: clickhouse-server
+        state: restarted
+  tasks:
+    - name: Clickhouse | Get clickhouse distrib
+      block:
+        - name: Get download packages
+          ansible.builtin.get_url:
+            url: "https://packages.clickhouse.com/rpm/stable/{{ item }}-{{ clickhouse_version }}.noarch.rpm"
+            dest: "./{{ item }}-{{ clickhouse_version }}.rpm"
+            mode: "0744"
+          with_items: "{{ clickhouse_packages }}"
+      rescue:
+        - name: Clickhouse | Rescue | Get download clickhouse-common-static package
+          ansible.builtin.get_url:
+            url: "https://packages.clickhouse.com/rpm/stable/clickhouse-common-static-{{ clickhouse_version }}.x86_64.rpm"
+            dest: "./clickhouse-common-static-{{ clickhouse_version }}.rpm"
+            mode: "0744"
+    - name: Clickhouse | Install clickhouse packages
+      become: true
+      ansible.builtin.yum:
+        disable_gpg_check: true
+        name:
+          - clickhouse-common-static-{{ clickhouse_version }}.rpm
+          - clickhouse-client-{{ clickhouse_version }}.rpm
+          - clickhouse-server-{{ clickhouse_version }}.rpm
+    - name: Clickhouse | Listen on * addr
+      become: true
+      ansible.builtin.replace:
+        path: /etc/clickhouse-server/config.xml
+        regexp: '<!-- <listen_host>0\.0\.0\.0<\/listen_host> -->'
+        replace: '<listen_host>0.0.0.0</listen_host>'
+      notify: Clickhouse | Start clickhouse service
+    - name: Clickhouse | Flush handlers
+      ansible.builtin.meta: flush_handlers
+    - name: Clickhouse | Create database
+      ansible.builtin.command: "clickhouse-client -h 0.0.0.0 -q 'create database logs;'"
+      register: create_db
+      failed_when: create_db.rc != 0 and create_db.rc != 82
+      changed_when: create_db.rc == 0
+    - name: Clickhouse | Create table
+      ansible.builtin.command: >-
+        "clickhouse-client -h 0.0.0.0 -q 'create table if not exists logs.mytable (message String) engine = MergeTree() order by tuple();'"
+      register: create_table
+      failed_when: create_db.rc != 0 and create_db.rc != 82
+      changed_when: create_table.rc == 0
+
+# - name: Install Clickhouse
+#   hosts: clickhouse
+#   roles:
+#     - clickhouse
+
+- name: Install Vector
+  hosts: vector
+  roles:
+    - vector
+
+- name: Install Lighthouse
+  hosts: lighthouse
+  roles:
+    - lighthouse
