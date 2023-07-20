@@ -9,7 +9,7 @@ ok: [localhost] => {
 }
 ```
 
-1. Найдите файл с переменными (group_vars) в котором задаётся найденное в первом пункте значение и поменяйте его на 'all default fact'. - _**[all/examp.yml_origin](/automation_infra/homeworks/tmp/ans/01/group_vars/all/examp.yml_origin)**_
+1. Найдите файл с переменными (group_vars) в котором задаётся найденное в первом пункте значение и поменяйте его на 'all default fact'. - _**[all/examp.yml_origin](automation_infra/homeworks/tmp/ans/01/group_vars/all/examp.yml_origin)**_
 2. Воспользуйтесь подготовленным (используется `docker`) или создайте собственное окружение для проведения дальнейших испытаний.
 3. Проведите запуск playbook на окружении из `prod.yml`. Зафиксируйте полученные значения `some_fact` для каждого из `managed host`.
 
