@@ -1,0 +1,73 @@
+
+PLAY [Install Clickhouse] ******************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [clickhouse-01]
+
+TASK [Get download packages] ***************************************************
+ok: [clickhouse-01] => (item=clickhouse-client)
+ok: [clickhouse-01] => (item=clickhouse-server)
+failed: [clickhouse-01] (item=clickhouse-common-static) => {"ansible_loop_var": "item", "changed": false, "dest": "./clickhouse-common-static-22.3.3.44.rpm", "elapsed": 0, "gid": 1000, "group": "user", "item": "clickhouse-common-static", "mode": "0744", "msg": "Request failed", "owner": "user", "response": "HTTP Error 404: Not Found", "secontext": "unconfined_u:object_r:user_home_t:s0", "size": 246310036, "state": "file", "status_code": 404, "uid": 1000, "url": "https://packages.clickhouse.com/rpm/stable/clickhouse-common-static-22.3.3.44.noarch.rpm"}
+
+TASK [Clickhouse | Rescue | Get download clickhouse-common-static package] *****
+ok: [clickhouse-01]
+
+TASK [Clickhouse | Install clickhouse packages] ********************************
+ok: [clickhouse-01]
+
+TASK [Clickhouse | Listen on * addr] *******************************************
+ok: [clickhouse-01]
+
+TASK [Clickhouse | Flush handlers] *********************************************
+
+TASK [Clickhouse | Create database] ********************************************
+ok: [clickhouse-01]
+
+TASK [Clickhouse | Create table] ***********************************************
+ok: [clickhouse-01]
+
+PLAY [Install Vector] **********************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [vector01]
+
+TASK [Vector | Create Vector group] ********************************************
+ok: [vector01]
+
+TASK [Vector | Create Vector user] *********************************************
+ok: [vector01]
+
+TASK [Vector | Create directory for Vector] ************************************
+ok: [vector01]
+
+TASK [Vector | Extract archive] ************************************************
+ok: [vector01]
+
+TASK [Vector | Create Vector config] *******************************************
+ok: [vector01]
+
+TASK [Vector | Create Vector service] ******************************************
+ok: [vector01]
+
+PLAY [Install lighthouse] ******************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [lighthouse01]
+
+TASK [Lighthouse | Install git and nginx] **************************************
+ok: [lighthouse01]
+
+TASK [Lighthouse | Create lighthouse config] ***********************************
+ok: [lighthouse01]
+
+TASK [Lighthouse | Reload nginx] ***********************************************
+changed: [lighthouse01]
+
+TASK [Lighthouse | Clone lighthouse repo] **************************************
+ok: [lighthouse01]
+
+PLAY RECAP *********************************************************************
+clickhouse-01              : ok=6    changed=0    unreachable=0    failed=0    skipped=0    rescued=1    ignored=0   
+lighthouse01               : ok=5    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+vector01                   : ok=7    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+

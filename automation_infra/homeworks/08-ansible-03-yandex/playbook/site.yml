@@ -1,0 +1,132 @@
+---
+- name: Install Clickhouse
+  hosts: clickhouse
+  handlers:
+    - name: Clickhouse | Start clickhouse service
+      become: true
+      ansible.builtin.service:
+        name: clickhouse-server
+        state: restarted
+  tasks:
+    - name: Clickhouse | Get clickhouse distrib
+      block:
+        - name: Get download packages
+          ansible.builtin.get_url:
+            url: "https://packages.clickhouse.com/rpm/stable/{{ item }}-{{ clickhouse_version }}.noarch.rpm"
+            dest: "./{{ item }}-{{ clickhouse_version }}.rpm"
+            mode: "0744"
+          with_items: "{{ clickhouse_packages }}"
+      rescue:
+        - name: Clickhouse | Rescue | Get download clickhouse-common-static package
+          ansible.builtin.get_url:
+            url: "https://packages.clickhouse.com/rpm/stable/clickhouse-common-static-{{ clickhouse_version }}.x86_64.rpm"
+            dest: "./clickhouse-common-static-{{ clickhouse_version }}.rpm"
+            mode: "0744"
+    - name: Clickhouse | Install clickhouse packages
+      become: true
+      ansible.builtin.yum:
+        disable_gpg_check: true
+        name:
+          - clickhouse-common-static-{{ clickhouse_version }}.rpm
+          - clickhouse-client-{{ clickhouse_version }}.rpm
+          - clickhouse-server-{{ clickhouse_version }}.rpm
+    - name: Clickhouse | Listen on * addr
+      become: true
+      ansible.builtin.replace:
+        path: /etc/clickhouse-server/config.xml
+        regexp: '<!-- <listen_host>0\.0\.0\.0<\/listen_host> -->'
+        replace: '<listen_host>0.0.0.0</listen_host>'
+      notify: Clickhouse | Start clickhouse service
+    - name: Clickhouse | Flush handlers
+      ansible.builtin.meta: flush_handlers
+    - name: Clickhouse | Create database
+      ansible.builtin.command: "clickhouse-client -h 0.0.0.0 -q 'create database logs;'"
+      register: create_db
+      failed_when: create_db.rc != 0 and create_db.rc != 82
+      changed_when: create_db.rc == 0
+    - name: Clickhouse | Create table
+      ansible.builtin.command: >-
+        "clickhouse-client -h 0.0.0.0 -q 'create table if not exists logs.mytable (message String) engine = MergeTree() order by tuple();'"
+      register: create_table
+      failed_when: create_db.rc != 0 and create_db.rc != 82
+      changed_when: create_table.rc == 0
+
+- name: Install Vector
+  hosts: vector
+  tasks:
+    - name: Vector | Create Vector group
+      become: true
+      ansible.builtin.group:
+        name: vector
+        state: present
+    - name: Vector | Create Vector user
+      become: true
+      ansible.builtin.user:
+        name: vector
+        group: vector
+        shell: /bin/noshell
+
+    - name: Vector | Create directory for Vector
+      become: true
+      ansible.builtin.file:
+        path: /opt/vector
+        state: directory
+        mode: "0777"
+    - name: Vector | Extract archive
+      ansible.builtin.unarchive:
+        src: https://packages.timber.io/vector/0.30.0/vector-0.30.0-x86_64-unknown-linux-musl.tar.gz
+        dest: /opt/vector
+        remote_src: true
+        extra_opts: [--strip-components=2]
+
+    - name: Vector | Create Vector config
+      ansible.builtin.template:
+        src: templates/vector.yml.j2
+        dest: /opt/vector/config/custom_config.yml
+        mode: "0644"
+      notify: Vector | Run vector as a daemon
+    - name: Vector | Create Vector service
+      become: true
+      ansible.builtin.copy:
+        src: templates/vector.service
+        dest: /etc/systemd/system/vector.service
+        mode: "0744"
+
+  handlers:
+    - name: Vector | Run vector as a daemon
+      become: true
+      ansible.builtin.systemd:
+        name: vector
+        state: restarted
+        enabled: true
+        daemon_reload: true
+
+- name: Install lighthouse
+  hosts: lighthouse
+  tasks:
+    - name: Lighthouse | Install git and nginx
+      become: true
+      ansible.builtin.yum:
+        disable_gpg_check: true
+        update_cache: true
+        name:
+          - git
+          - nginx
+        state: present
+    - name: Lighthouse | Create lighthouse config
+      become: true
+      ansible.builtin.template:
+        src: templates/lighthouse-nginx.conf.j2
+        dest: /etc/nginx/conf.d/lighthouse-nginx.conf
+        mode: "0644"
+    - name: Lighthouse | Reload nginx
+      become: true
+      ansible.builtin.systemd:
+        name: nginx
+        state: reloaded
+    - name: Lighthouse | Clone lighthouse repo
+      become: true
+      ansible.builtin.git:
+        repo: https://github.com/VKCOM/lighthouse.git
+        version: master
+        dest: /opt/lighthouse

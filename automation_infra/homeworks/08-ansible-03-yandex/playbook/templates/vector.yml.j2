@@ -1,0 +1,15 @@
+data_dir: /opt/vector
+sources:
+  dmesg_log:
+    type: file
+    include:
+      - /var/log/dmesg
+sinks:
+  click:
+    type: clickhouse
+    inputs:
+      - dmesg_log
+    compression: gzip
+    database: logs
+    endpoint: http://84.201.158.237:8123
+    table: mytable
