@@ -13,7 +13,7 @@
 
 Происходит провижен через terraform, необходимо запускать сначала без провижена, потом с ним (раскоментировать)
 
-[Код описан тут](/automation_infra/homeworks/terraform/modules/m1-w4-k8s-cluster/vpc.tf)
+[Код описан тут](https://github.com/Wollfik/devops-netology/blob/main/automation_infra/homeworks/homeworks/terraform/modules/m1-w4-k8s-cluster/vpc.tf)
 
 [Директория с остальными файлами](/automation_infra/homeworks/terraform/modules/m1-w4-k8s-cluster)
 
