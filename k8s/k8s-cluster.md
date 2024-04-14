@@ -15,7 +15,7 @@
 
 [Код описан тут](https://github.com/Wollfik/devops-netology/blob/main/automation_infra/homeworks/homeworks/terraform/modules/m1-w4-k8s-cluster/vpc.tf)
 
-[Директория с остальными файлами](/automation_infra/homeworks/terraform/modules/m1-w4-k8s-cluster)
+[Директория с остальными файлами](https://github.com/Wollfik/devops-netology/tree/main/automation_infra/homeworks/homeworks/terraform/modules/m1-w4-k8s-cluster)
 
 ![image](https://github.com/malkops/nah/assets/44001733/28578aab-8cd3-4ce4-a096-313d3a563654)
 
